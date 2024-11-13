@@ -1,2 +1,1 @@
-# UFLA 🎓
-Repositório destinado às atividades e projetos desenvolvidos durante a graduação em Sistemas de Informação.
+# Repositório dos códigos feitos na disciplina de Arquitetura de Computadores da UFLA, no semestre 2023/1.
