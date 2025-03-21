@@ -1,4 +1,4 @@
-```markdown
+
 # EX1 - INTRO: Download and Explore a CSV File
 **Name:** João Augusto Dias Neto  
 **Class:** 14A  
@@ -10,10 +10,10 @@
 ### 1. Organização dos Arquivos
 - Criei a pasta `cnpj_exercise` e naveguei até ela com os seguintes comandos no terminal:
 
-```bash
+
 mkdir cnpj_exercise
 cd cnpj_exercise
-```
+
 
 - Baixei o arquivo `Lucro Real.zip` do site da Receita Federal e o movi para a pasta `cnpj_exercise`:
 
@@ -246,5 +246,5 @@ A Bash script was created to automate the file analysis, which provided the abov
 The manual analysis, coupled with the automation of the Bash script, successfully provided the necessary details about the `lucro_real.csv` file, ensuring accurate data collection and reporting.
 
 ---
-```
+
 
