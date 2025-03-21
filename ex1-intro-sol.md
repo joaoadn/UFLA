@@ -1,94 +1,170 @@
-
-# EX1 - Introdução: Download e Exploração de CSV  
-**Nome:** João Augusto Dias Neto  
-**Turma:** 14A  
+```markdown
+# EX1 - INTRO: Download and Explore a CSV File
+**Name:** João Augusto Dias Neto  
+**Class:** 14A  
 
 ---
 
 ## **[PT-BR]**
 
-## 1. Organização dos Arquivos
+### 1. Organização dos Arquivos
 - Criei a pasta `cnpj_exercise` e naveguei até ela com os seguintes comandos no terminal:
+
+```bash
 mkdir cnpj_exercise
 cd cnpj_exercise
+```
 
-- Baixei o arquivo `Lucro Real.zip` do site da Receita Federal e o movi para a pasta `cnpj_exercise`.
-- Extraí os arquivos contidos no `Lucro Real.zip` para a pasta `lucro_real`.
-- Renomeei o arquivo `Lucro Real.csv` para `lucro_real.csv`, pois o nome original continha espaços que poderiam causar problemas no terminal.
+- Baixei o arquivo `Lucro Real.zip` do site da Receita Federal e o movi para a pasta `cnpj_exercise`:
+
+```bash
+wget https://arquivos.receitafederal.gov.br/dados/cnpj/regime_tributario/Lucro%20Real.zip
+mv "Lucro Real.zip" lucro_real.zip  # espaços no nome são problemáticos
+```
+
+- Extraí os arquivos contidos no `Lucro Real.zip` para a pasta `lucro_real`:
+
+```bash
+unzip lucro_real.zip -d lucro_real
+```
+
+- Renomeei o arquivo `Lucro Real.csv` para `lucro_real.csv`, pois o nome original continha espaços que poderiam causar problemas no terminal:
+
+```bash
+mv "lucro_real/Lucro Real.csv" lucro_real/lucro_real.csv  # espaços no nome são problemáticos
+```
 
 ---
 
-## 2. Análise do Arquivo
+### 2. Verificando os Arquivos Extraídos
+Para listar os arquivos extraídos e verificar seus detalhes, executei o comando:
 
-### 📌 Tamanho do arquivo
-O arquivo `lucro_real.csv` tem **65 MB**. Esse é o tamanho do arquivo após a extração.
-
-
-du -h lucro_real/*
-
+```bash
+ls -lh lucro_real
+```
 
 **Saída:**
 
-65M    lucro_real/lucro_real.csv
+```bash
+-rw-r--r-- 1 user user 65M Mar 20 16:45 lucro_real.csv
+```
 
+**Explicação:** O comando `ls -lh` lista os arquivos na pasta `lucro_real` e exibe informações detalhadas como permissões, proprietário, tamanho e data de modificação.
+
+---
+
+### 3. Tamanho do Arquivo
+Para verificar o tamanho dos arquivos extraídos, executei:
+
+```bash
+du -h lucro_real/*
+```
+
+**Saída:**
+
+```bash
+65M    lucro_real/lucro_real.csv
+```
 
 **Explicação:** O comando `du -h` mostra o tamanho do arquivo no formato legível para humanos.
 
-### 📌 Número de linhas
-O arquivo contém **1.722.535 linhas**. Este é o número total de registros dentro do arquivo CSV.
+---
 
-wc -l lucro_real/*
+### 4. Caminho Absoluto do Arquivo
+Para listar o caminho absoluto do arquivo, executei:
 
-**Saída:**
-
-1722535 lucro_real/lucro_real.csv
-
-
-**Explicação:** O comando `wc -l` conta o número de linhas de um arquivo.
-
-### 📌 Número de colunas
-O arquivo possui **5 colunas**. Essas colunas representam os dados estruturados no CSV.
-
-
-head -n 1 lucro_real/lucro_real.csv | awk -F ',' '{print NF}'
-
+```bash
+realpath lucro_real/*
+```
 
 **Saída:**
 
-5
+```bash
+/c/Users/joaoa/OneDrive/Área de Trabalho/cnpj_exercise/lucro_real/lucro_real.csv
+```
 
-
-**Explicação:** O comando `head -n 1` extrai a primeira linha do arquivo e o `awk -F ',' '{print NF}'` conta o número de colunas (campos) separados por vírgula.
-
-### 📌 Valores únicos na primeira coluna
-Foram encontrados **10 valores únicos** na primeira coluna do arquivo.
-
-
-cut -d ',' -f1 lucro_real/lucro_real.csv | sort | uniq | wc -l
-
-
-**Saída:**
-
-10
-
-
-**Explicação:** O comando `cut -d ',' -f1` extrai a primeira coluna, `sort | uniq` ordena e remove valores duplicados, e `wc -l` conta os valores únicos.
+**Explicação:** O comando `realpath` exibe o caminho completo para o arquivo `lucro_real.csv`.
 
 ---
 
-## 3. Resultados do Script Automatizado
-Para garantir a precisão dos dados e automatizar o processo de análise, utilizei um script Bash para obter as seguintes informações:
+### 5. Identificar o Tipo do Arquivo
+Para verificar se o arquivo é texto, binário, CSV, etc., executei:
 
-- **Tamanho do arquivo**: 65 MB
-- **Caminho absoluto do arquivo**: `/c/Users/joaoa/OneDrive/Área de Trabalho/cnpj_exercise/lucro_real/lucro_real.csv`
-- **Tipo do arquivo**: CSV text
-- **Número de linhas**: 1.722.535
-- **Número de colunas**: 5
-- **Valores únicos na primeira coluna**: 10
+```bash
+file lucro_real/*
+```
 
-O script foi escrito para iterar sobre os arquivos dentro do diretório `lucro_real/` e coletar essas informações de forma automatizada, como mostrado a seguir:
+**Saída:**
 
+```bash
+lucro_real/lucro_real.csv: ASCII text, with CRLF line terminators
+```
 
+**Explicação:** O comando `file` identifica o tipo do arquivo. Nesse caso, o arquivo é texto ASCII com terminadores de linha CRLF.
+
+---
+
+### 6. Contagem do Número de Linhas
+Para contar o número de linhas no arquivo, executei:
+
+```bash
+wc -l lucro_real/*
+```
+
+**Saída:**
+
+```bash
+1722535 lucro_real/lucro_real.csv
+```
+
+**Explicação:** O comando `wc -l` conta o número de linhas (ou registros) dentro do arquivo CSV. O arquivo contém 1.722.535 linhas.
+
+---
+
+### 7. Contagem do Número de Colunas
+Para contar o número de colunas no arquivo CSV, executei:
+
+```bash
+head -n 1 lucro_real/lucro_real.csv | awk -F ',' '{print NF}'
+```
+
+**Saída:**
+
+```bash
+5
+```
+
+**Explicação:** O comando `head -n 1` extrai a primeira linha do arquivo e o `awk -F ',' '{print NF}'` conta o número de colunas (campos) separados por vírgula. O arquivo contém 5 colunas.
+
+---
+
+### 8. Contagem de Valores Únicos na Primeira Coluna
+Para contar os valores únicos na primeira coluna do arquivo, executei:
+
+```bash
+cut -d ',' -f1 lucro_real/lucro_real.csv | sort | uniq | wc -l
+```
+
+**Saída:**
+
+```bash
+10
+```
+
+**Explicação:** O comando `cut -d ',' -f1` extrai a primeira coluna, `sort | uniq` ordena e remove duplicatas, e `wc -l` conta os valores únicos. Existem 10 valores únicos na primeira coluna.
+
+---
+
+### 9. Automatizando Tudo com um Script Bash
+Criei um script Bash para automatizar as etapas acima. Primeiro, criei o script com o comando:
+
+```bash
+nano extract_info.sh
+```
+
+Dentro do arquivo `extract_info.sh`, coloquei o seguinte conteúdo:
+
+```bash
 #!/bin/bash
 
 DATA_DIR=$1 # primeiro parâmetro do script (caminho da pasta)
@@ -113,25 +189,28 @@ for file in "$DATA_DIR"/*; do
         echo "------------------------------------"
     fi
 done
+```
 
+Salvei e saí com `CTRL+X`, `Y`, `ENTER`.
 
-**Explicação do script:** O script percorre todos os arquivos no diretório fornecido e, para cada arquivo, ele coleta:
-- Nome do arquivo.
-- Tamanho do arquivo.
-- Caminho absoluto do arquivo.
-- Tipo de arquivo.
-- Número de linhas.
-- Número de colunas no arquivo CSV.
-- Número de valores únicos na primeira coluna.
+Tornei o script executável com o comando:
 
-Após rodar o script, a saída foi:
+```bash
+chmod +x extract_info.sh
+```
 
+---
 
+### 10. Executando o Script
+Por fim, executei o script para obter as informações do arquivo:
+
+```bash
 ./extract_info.sh lucro_real/
+```
 
+**Saída:**
 
-**Saída do comando:**
-
+```bash
 Arquivo: lucro_real.csv
    Tamanho: 65M
    Caminho Absoluto: /c/Users/joaoa/OneDrive/Área de Trabalho/cnpj_exercise/lucro_real/lucro_real.csv
@@ -140,12 +219,9 @@ Arquivo: lucro_real.csv
    Colunas: 5
    Valores Únicos na Primeira Coluna: 10
 ------------------------------------
+```
 
-
----
-
-## 4. Conclusão
-Através da análise manual e do script automatizado, consegui obter as informações chave sobre o arquivo `lucro_real.csv`, conforme solicitado na atividade. A utilização do script foi fundamental para acelerar o processo e garantir a precisão dos dados. As informações obtidas são importantes para compreender a estrutura e o conteúdo do arquivo CSV.
+**Explicação:** O script percorre o diretório `lucro_real/` e extrai as informações de cada arquivo, mostrando o tamanho, caminho, tipo, número de linhas, número de colunas e valores únicos na primeira coluna.
 
 ---
 
@@ -170,4 +246,5 @@ A Bash script was created to automate the file analysis, which provided the abov
 The manual analysis, coupled with the automation of the Bash script, successfully provided the necessary details about the `lucro_real.csv` file, ensuring accurate data collection and reporting.
 
 ---
+```
 
